@@ -5,7 +5,7 @@ Source code for "P-NAL: a Simple, Effective and Interpretable Entity Alignment M
 The source code for some parts of our method has been adapted from the corresponding repositories. 
 The repositories are:
 - [BERT-INT](https://github.com/kosugi11037/bert-int) for BERT-INT.
-- [PARIS](http://webdam.inria.fr/paris/) for PARIS.
+- [PARIS](https://github.com/dig-team/PARIS) for PARIS.
 - [PARIS+](https://github.com/epfl-dlab/entity-matchers) for entity-matchers(PARIS+).
 
 ## Installation process
@@ -19,5 +19,6 @@ Download the datasets: you can find them following the link [https://drive.googl
 ## Reproduction of results
 
 cd PNALoverall
+
 python run_experiment.py --dataset DBP15k_full_zh_en_2 --dataset_division 721_1folds --table_setting 0
 
