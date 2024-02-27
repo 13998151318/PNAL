@@ -10,9 +10,9 @@ The repositories are:
 
 ## Installation process
 
-Create a virtual environment with Anaconda to run PNALalignment and install the packages if needed. (fine for torch1.12 and CUDA11.6)
+Create a virtual environment with Anaconda to run PNALalignment and install the packages if needed. (fine for python3.8 torch1.12 and CUDA11.6)
 
-If you want to run the BERT unit, create an environment (fine for torch1.12 and CUDA11.6) to run experiments with it.
+If you want to run the BERT unit, create an environment (fine for python3.8 torch1.12 and CUDA11.6) to run experiments with it.
 
 Download the datasets: you can find them following the link [https://drive.google.com/file/d/1FLY2OgFpY5o_HRyweDkJzSS0XSKLu3zh/view?usp=sharing](https://drive.google.com/file/d/1FLY2OgFpY5o_HRyweDkJzSS0XSKLu3zh/view?usp=sharing). 
   Extract the zip and place the datasets into the folder "datasets".
