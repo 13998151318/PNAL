@@ -1797,8 +1797,8 @@ public class Pnal {
                 if (temp_a_s_for_one_entity1[y2] == null)
                     continue;
                 //可优化，提前排序抽取前几
-                //D.p(y1,y2);
-                EqualityStore.insert_alignment_sentence_left(temp_a_s_for_one_entity1[y2], alignment_sentences_of_entity_embedding, factStore1, setting.max_alignment_sentences*4);
+                //D.p(y1,y2);  //setting.max_alignment_sentences*4
+                EqualityStore.insert_alignment_sentence_left(temp_a_s_for_one_entity1[y2], alignment_sentences_of_entity_embedding, factStore1, 5000);
             }
         }
     }
