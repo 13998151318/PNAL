@@ -14,7 +14,7 @@ Create a virtual environment with Anaconda to run PNALalignment and install the 
 
 If you want to run the BERT unit, create an environment (fine for python3.8, torch1.12 and CUDA11.6) to run experiments with it.
 
-Download the datasets, pretrained BERT model and some experiment results (with evidence log file): you can find them following the link [https://drive.google.com/file/d/1zfMhoqFquKE7LOlJ2seRtwhXg9kvohC8/view?usp=sharing](https://drive.google.com/file/d/1zfMhoqFquKE7LOlJ2seRtwhXg9kvohC8/view?usp=sharing). 
+Download the datasets, pretrained BERT model and some experiment results (with evidence log file): you can find them following the link [https://drive.google.com/file/d/1fikMMw_DSs7dreNnp27NSQXnK1ZVZHxu/view?usp=sharing](https://drive.google.com/file/d/1fikMMw_DSs7dreNnp27NSQXnK1ZVZHxu/view?usp=sharing). 
   Extract the zip and place the datasets into the folder "datasets".
 
 The DBP15k and D_W_15K_V2 datasets are consistent with other studies, with entities and relations' urls abbreviated for simplicity.
