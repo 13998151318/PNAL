@@ -10,16 +10,19 @@ The repositories are:
 
 ## Installation process
 
-Create a virtual environment with Anaconda to run PNALalignment and install the packages if needed. (fine for python3.8 torch1.12 and CUDA11.6)
+Create a virtual environment with Anaconda to run PNALalignment and install the imported python packages if needed. (fine for python3.8 and numpy)
 
-If you want to run the BERT unit, create an environment (fine for python3.8 torch1.12 and CUDA11.6) to run experiments with it.
+If you want to run the BERT unit, create an environment (fine for python3.8, torch1.12 and CUDA11.6) to run experiments with it.
 
-Download the datasets: you can find them following the link [https://drive.google.com/file/d/1FLY2OgFpY5o_HRyweDkJzSS0XSKLu3zh/view?usp=sharing](https://drive.google.com/file/d/1FLY2OgFpY5o_HRyweDkJzSS0XSKLu3zh/view?usp=sharing). 
+Download the datasets, pretrained BERT model and some experiment results (with evidence log file): you can find them following the link [https://drive.google.com/file/d/1zfMhoqFquKE7LOlJ2seRtwhXg9kvohC8/view?usp=sharing](https://drive.google.com/file/d/1zfMhoqFquKE7LOlJ2seRtwhXg9kvohC8/view?usp=sharing). 
   Extract the zip and place the datasets into the folder "datasets".
 
+The DBP15k and D_W_15K_V2 datasets are consistent with other studies, with entities and relations' urls abbreviated for simplicity.
 ## Reproduction of results
 
 cd PNALoverall
 
 python run_experiment.py --dataset DBP15k_full_zh_en_2 --dataset_division 721_1folds --table_setting 0
+
+(change the argument "table_setting" for different configuration groups (1-5) and ablation studies (6-11))
 

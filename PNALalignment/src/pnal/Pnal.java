@@ -24,18 +24,21 @@ import bak.pcj.IntIterator;
 import bak.pcj.map.IntKeyOpenHashMap;
 import bak.pcj.set.IntOpenHashSet;
 import bak.pcj.set.IntSet;
+
+import pnal.storage.FactStore;
+import pnal.storage.FactStore.PredicateAndObject;
+import pnal.storage.Parser;
+import pnal.nal.TruthValue;
+import pnal.nal.Stamp;
+import pnal.nal.AlignmentSentence;
+import pnal.nal.TruthFunctions;
+
+
 import javatools.administrative.Announce;
 import javatools.administrative.Announce.Level;
 import javatools.administrative.D;
 import javatools.datatypes.Pair;
 import javatools.parsers.NumberFormatter;
-import pnal.nal.AlignmentSentence;
-import pnal.nal.Stamp;
-import pnal.nal.TruthFunctions;
-import pnal.nal.TruthValue;
-import pnal.storage.FactStore;
-import pnal.storage.Parser;
-import pnal.storage.FactStore.PredicateAndObject;
 import javatools.filehandlers.CSVFile;
 import javatools.filehandlers.CSVLines;
 import javatools.filehandlers.FileLines;
@@ -989,18 +992,70 @@ public class Pnal {
 				currentNeighborhood.propagateScores();
 			}
 			if (equalities != null){
-                if(setting.use_entity_emb_sim||setting.use_translate_emb){
-                    //LinkedList<AlignmentSentence> list =  EqualityStore.deep_clone_list(alignment_sentences_of_entity_embedding.get(fs1.id_big_to_small(y1)));
-                    LinkedList<AlignmentSentence> list =  alignment_sentences_of_entity_embedding.get(fs1.id_big_to_small(y1));
-                    if (list != null){
-                        ListIterator<AlignmentSentence> it = list.listIterator();
-                        while (it.hasNext()) {
-                            AlignmentSentence a = it.next();
-                            if (temp_a_s_for_one_entity[fs2.id_big_to_small(a.similarityStatement.predTermIndex)] == null){
-                                temp_a_s_for_one_entity[fs2.id_big_to_small(a.similarityStatement.predTermIndex)] = a;
+                if(setting.precompute_emb_sim){
+                    if(setting.use_entity_emb_sim||setting.use_translate_emb){
+                        //LinkedList<AlignmentSentence> list =  EqualityStore.deep_clone_list(alignment_sentences_of_entity_embedding.get(fs1.id_big_to_small(y1)));
+                        LinkedList<AlignmentSentence> list =  alignment_sentences_of_entity_embedding.get(fs1.id_big_to_small(y1));
+                        if (list != null){
+                            ListIterator<AlignmentSentence> it = list.listIterator();
+                            while (it.hasNext()) {
+                                AlignmentSentence a = it.next();
+                                if (temp_a_s_for_one_entity[fs2.id_big_to_small(a.similarityStatement.predTermIndex)] == null){
+                                    temp_a_s_for_one_entity[fs2.id_big_to_small(a.similarityStatement.predTermIndex)] = a;
+                                }
+                                else{
+                                    temp_a_s_for_one_entity[fs2.id_big_to_small(a.similarityStatement.predTermIndex)].add_evidence(a.truthValue, 2, setting.use_c_as_probability_value);
+                                }
                             }
-                            else{
-                                temp_a_s_for_one_entity[fs2.id_big_to_small(a.similarityStatement.predTermIndex)].add_evidence(a.truthValue, 2, setting.use_c_as_probability_value);
+                        }
+                    }
+                }
+                else{
+                    if(setting.use_entity_emb_sim){
+                        TruthValue t;
+                        double best = 0;
+                        int best_y2 = -1;
+                        if(fs1.entity_emb.get(y1)!=null){
+                            /* 
+                            for(int y2 : fs2.entity_emb.keySet().toArray()){
+                                if(fs2.entity_emb.get(y2)!=null){
+                                    double sim = FactStore.cosine_similarity((List<Float>)fs1.entity_emb.get(y1), (List<Float>)fs2.entity_emb.get(y2));
+                                    if (sim > best){
+                                        best = sim;
+                                        best_y2 = y2;
+                                    }
+                                }
+                            }*/
+                            for(int y2 : fs2.entity_emb.keySet().toArray()){
+                                if(fs2.entity_emb.get(y2)!=null){
+                                    double sim = FactStore.cosine_similarity((List<Float>)fs1.entity_emb.get(y1), (List<Float>)fs2.entity_emb.get(y2));
+                                    t = TruthValue.truthValue_of_entity_embedding(sim, setting.entity_emb_sim_confidence, y2 == best_y2, setting.use_c_as_probability_value);
+                                    if (temp_a_s_for_one_entity[fs2.id_big_to_small(y2)] == null){
+                                        temp_a_s_for_one_entity[fs2.id_big_to_small(y2)] = new AlignmentSentence(y1, y2, t, 2);
+                                    }
+                                    else{
+                                        temp_a_s_for_one_entity[fs2.id_big_to_small(y2)].add_evidence(t, 2, setting.use_c_as_probability_value);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if(setting.use_translate_emb){
+                        TruthValue t;
+                        double best = 0;
+                        int best_y2 = -1;
+                        if(fs1.trans_entity_emb.get(y1)!=null){
+                            for(int y2 : fs2.trans_entity_emb.keySet().toArray()){
+                                if(fs2.trans_entity_emb.get(y2)!=null){
+                                    double sim = FactStore.cosine_similarity((List<Float>)fs1.trans_entity_emb.get(y1), (List<Float>)fs2.trans_entity_emb.get(y2));
+                                    t = TruthValue.truthValue_of_entity_embedding(sim, setting.trans_entity_emb_sim_confidence, y2 == best_y2, setting.use_c_as_probability_value);
+                                    if (temp_a_s_for_one_entity[fs2.id_big_to_small(y2)] == null){
+                                        temp_a_s_for_one_entity[fs2.id_big_to_small(y2)] = new AlignmentSentence(y1, y2, t, 2);
+                                    }
+                                    else{
+                                        temp_a_s_for_one_entity[fs2.id_big_to_small(y2)].add_evidence(t, 2, setting.use_c_as_probability_value);
+                                    }
+                                }
                             }
                         }
                     }
@@ -1886,12 +1941,15 @@ public class Pnal {
 		if(setting.use_attribute_value_emb_sim){
             load_value_emb_sim();
         }
-        alignment_sentences_of_entity_embedding = new HashMap<Integer, LinkedList<AlignmentSentence>>((int)(factStore1.num_proper_entities()/0.75 + 1));
-        for (int i = 0; i < factStore1.num_proper_entities(); i++) {
-            alignment_sentences_of_entity_embedding.put(i, new LinkedList<AlignmentSentence>());
-        }
-        if(setting.use_entity_emb_sim||setting.use_translate_emb){
-            compute_entity_emb_sim();
+        if(setting.precompute_emb_sim){
+            alignment_sentences_of_entity_embedding = new HashMap<Integer, LinkedList<AlignmentSentence>>((int)(factStore1.num_proper_entities()/0.75 + 1));
+            for (int i = 0; i < factStore1.num_proper_entities(); i++) {
+                alignment_sentences_of_entity_embedding.put(i, new LinkedList<AlignmentSentence>());
+            }
+        
+            if(setting.use_entity_emb_sim||setting.use_translate_emb){
+                compute_entity_emb_sim();
+            }
         }
         Announce.done();			
         entity_emb = null;

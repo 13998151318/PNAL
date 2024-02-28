@@ -161,6 +161,7 @@ public class Setting {
 
   public boolean all_revision;
   public boolean all_prob_revision;
+  public boolean precompute_emb_sim;
 
   /** Types of string distance used in Computed.compareStrings()*/
   /* LEVENSHTEIN and SHINGLINGLEVENHSHTEIN are not guaranteed to work */
@@ -331,6 +332,7 @@ public class Setting {
     trans_entity_emb_sim_confidence = Parameters.getDouble("trans_entity_emb_sim_confidence", 0.5); 
     all_revision =Parameters.getBoolean("all_revision", false);
     all_prob_revision =Parameters.getBoolean("all_prob_revision", false);
+    precompute_emb_sim =Parameters.getBoolean("precompute_emb_sim", false);
     max_evidence = 15;
     display_evidence_count = 10;
     TRUTH_EPSILON = 0.01f;
