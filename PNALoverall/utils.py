@@ -189,7 +189,7 @@ def run_paris(dataset_in, root_folder, name, ontology1, ontology2, kg1_1v1_assum
     with open(task_name + '/paris.ini', 'w') as ini_file:
         
         lang = name[-7:-5]
-        excel_num = ""
+        excel_num = "" # excel_num represents the id of previous step of P-NAL experiment, which provides finetuning entity set for this step of experiment 
         setting3_bootsrtap = 2  #False  True
         if table_setting == 0 or table_setting == 4:
             excel_num = ""
