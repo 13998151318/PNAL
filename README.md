@@ -14,7 +14,7 @@ Create a virtual environment with Anaconda to run PNALoverall and install the im
 
 If you want to run the BERT unit, create an environment (fine for python3.8, torch1.12, CUDA11.6 and transformers) to run experiments with it.
 
-Download the datasets, pretrained BERT model and some experiment results (with evidence log file): you can find them following the link [https://drive.google.com/file/d/1MTUH4WUW38g6NvWFQy11TRolEFerMCCU/view?usp=sharing](https://drive.google.com/file/d/1MTUH4WUW38g6NvWFQy11TRolEFerMCCU/view?usp=sharing). 
+Download the datasets, pretrained BERT model and some experiment results (with evidence log file): you can find them following the link [https://figshare.com/articles/dataset/PNAL_cloud_data_zip/25329184](https://figshare.com/articles/dataset/PNAL_cloud_data_zip/25329184). 
 Extract the zip and place the contents of "datasets" into the empty folder "PNAL/datasets". 
 Place the contents of "data(for BERT)" into the empty folder "PNAL/BERTunit/data". 
 
